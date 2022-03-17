@@ -1,0 +1,44 @@
+{
+  "id": "2812810",
+  "name": "牛油果博客",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2907178",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e6af",
+      "unicode_decimal": 59055
+    },
+    {
+      "icon_id": "11983520",
+      "name": "twitter",
+      "font_class": "twitter",
+      "unicode": "ea07",
+      "unicode_decimal": 59911
+    },
+    {
+      "icon_id": "2405900",
+      "name": "CSDN",
+      "font_class": "csdn",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "1893226",
+      "name": "archives",
+      "font_class": "archives",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "18122157",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e6ba",
+      "unicode_decimal": 59066
+    }
+  ]
+}
