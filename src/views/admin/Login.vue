@@ -55,7 +55,7 @@ export default {
       } else {
         this.$message.success('登陆成功')
         window.sessionStorage.setItem('username', res.data.username)
-        this.$router.push('/mg/home')
+        this.$router.push('/mg/welcome')
       }
     }
   }

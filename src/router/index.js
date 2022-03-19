@@ -10,11 +10,13 @@ import About from "../views/About";
 import Error from '../views/404'
 
 import Login from "../views/admin/Login";
+import Welcome from "../views/admin/Welcome";
 import Home from "../views/admin/Home";
-import BlogList from "../views/admin/BlogManage";
+import ArticleMg from "../views/admin/ArticleMg";
 import Push from "../views/admin/Write";
 import Edit from "../views/admin/Edit";
-import TagManage from "../views/admin/TagManage";
+import TagMg from "../views/admin/TagMg";
+import Setting from "../views/admin/Setting";
 
 
 Vue.use(VueRouter)
@@ -54,14 +56,19 @@ const routes = [
         path: '/admin',
         component: Login,
 
-    }, {
+    },
+
+    // 后台路由
+    {
         path: '/mg',
         component: Home,
         children: [
-            {path: 'home', component: BlogList},
-            {path: 'push', component: Push},
+            {path: 'welcome', component: Welcome},
+            {path: 'article', component: ArticleMg},
+            {path: 'write', component: Push},
             {path: 'edit/:id', component: Edit},
-            {path: 'tag', component: TagManage},
+            {path: 'tag', component: TagMg},
+            {path: 'setting', component: Setting},
         ]
     },
 

@@ -1,10 +1,10 @@
 <template>
-  <div style="height: auto;min-height: 700px">
+  <div style="height: auto;">
+    <!--   面包屑导航   -->
     <el-header style="height: 25px;">
-      <!--   面包屑导航   -->
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/mg/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/mg/push">创作中心</a></el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/mg/welcome' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/mg/write">创作中心</a></el-breadcrumb-item>
       </el-breadcrumb>
 
     </el-header>
@@ -42,7 +42,7 @@
         <!-- 嵌入 Markdown 编辑器 -->
         <el-form-item label="内容">
           <mavon-editor
-              style="height: 420px"
+              style="height: 400px"
               v-model="ruleForm.content"
               @save=""
           ></mavon-editor>
