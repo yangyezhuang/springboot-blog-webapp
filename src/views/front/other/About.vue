@@ -5,8 +5,8 @@
     <el-main>
       <div style="width: 800px;min-height: 650px;margin: 0 auto">
         <!--    关于作者    -->
-        <h3 style="text-align: left">关于作者</h3>
-        <el-card>
+
+        <el-card> <h3 style="text-align: left">关于作者</h3>
           <el-timeline :reverse="reverse">
             <el-timeline-item
                 style="text-align: left"
@@ -21,11 +21,9 @@
           <p style="color: red;text-align: left">著作权归作者所有。<br>
             商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 
-        </el-card>
-
+          <hr>
         <!--   给我留言     -->
         <h3 style="text-align: left">给我留言</h3>
-        <el-card style="margin-top: 20px">
           <el-form :label-position="left" label-width="80px" :model="formLabelAlign">
             <el-form-item label="邮箱">
               <el-input v-model="formLabelAlign.region"></el-input>
@@ -44,8 +42,8 @@
 </template>
 
 <script>
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 export default {
   name: "About",

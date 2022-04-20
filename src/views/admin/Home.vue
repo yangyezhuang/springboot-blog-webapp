@@ -2,53 +2,76 @@
   <div>
     <el-container>
       <!--   侧边栏菜单   -->
-      <el-aside style="width: 200px;">
+      <el-aside :width="isCollapse?'64px':'200px'">
         <el-menu
-            background-color="#8AC072"
-            style="height: auto;min-height: 650px;"
-            active-text-color="blue"
-            text-color="white"
             router
-            default-active="2"
+            unique-opened
+            background-color="#8AC072"
+            text-color="white"
+            active-text-color="#eb4d4b"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose">
-          <div style="margin-top: 25px">
-            <div style="width: 55px;background-color: white;border-radius: 50%;margin: 0 auto">
-              <img src="../../assets/img/logo.png" alt="" style="width: 50px"></div>
-            <br>
-            <strong style="color: white">admin</strong>
-          </div>
-          <el-divider></el-divider>
+            :collapse="isCollapse"
+        >
+          <!--  logo  -->
+          <el-submenu>
+            <template slot="title">
+              <img src="../../assets/img/logo.png" alt="" style="width: 25px;float: left;margin-top: 15px">
+              <span style="text-align: center;font-size: 17px;color: white;
+            margin-top: 0;margin-bottom: 0;margin-left: 7px">后台管理系统</span>
+            </template>
+          </el-submenu>
 
-          <el-menu-item index="/mg/welcome">
-            <i class="el-icon-house" style="color: white"></i>
-            <span slot="title">主&nbsp;页</span>
-          </el-menu-item>
-          <el-menu-item index="/mg/article">
-            <i class="el-icon-notebook-2" style="color: white"></i>
-            <span slot="title">文章管理</span>
-          </el-menu-item>
-          <el-menu-item index="/mg/write">
-            <i class="el-icon-edit" style="color: white"></i>
-            <span slot="title">创作中心</span>
-          </el-menu-item>
-          <el-menu-item index="/mg/tag">
-            <i class="el-icon-price-tag" style="color: white"></i>
-            <span slot="title">标签管理</span>
-          </el-menu-item>
-          <el-menu-item index="/mg/setting">
-            <i class="el-icon-setting" style="color: white"></i>
-            <span slot="title">网站设置</span>
-          </el-menu-item>
+          <!-- 一级菜单 -->
+          <el-submenu
+              :index="item.id + ''"
+              v-for="item in menus"
+              :key="item.id"
+          >
+            <template slot="title">
+              <i :class="item.icon"></i>
+              <span>{{ item.authName }}</span>
+            </template>
+
+            <!-- 二级菜单 -->
+            <el-menu-item
+                :index="'/' + subItem.path"
+                v-for="subItem in item.children"
+                :key="subItem.id"
+            >
+              <template slot="title">
+                <i :class="subItem.icon"></i>
+                <span>{{ subItem.authName }}</span>
+              </template>
+            </el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-aside>
 
       <!--   中间主体区域   -->
       <el-container>
         <el-header>
+          <div>
+            <!--  折叠/展开  -->
+            <span>
+              <i class="el-icon-s-fold" @click="Collapse"></i>
+            </span>
+
+            <!--  面包屑  -->
+            <div style="margin-top: 0;">
+              <el-breadcrumb separator="/">
+                <el-breadcrumb-item
+                    v-for="item in breadList"
+                    :key="item.path"
+                    :to="{ path: item.path }"
+                >{{ item.meta.title }}
+                </el-breadcrumb-item>
+              </el-breadcrumb>
+            </div>
+          </div>
+
+
           <el-menu router mode="horizontal">
-            <el-menu-item style="font-size: 18px;">牛油果博客</el-menu-item>
+            <!--            <el-menu-item style="font-size: 18px;">-->
             <el-menu-item style="float: right">
               <el-button size="mini" type="text" icon="el-icon-user-solid" @click="user">个人中心</el-button>
               <el-button size="mini" type="text" icon="el-icon-switch-button" @click="logout">退出</el-button>
@@ -65,37 +88,86 @@
 </template>
 
 <script>
+import menu from '../../assets/data/menu.json'
+
 export default {
   name: "Home",
   data() {
-    return {}
+    return {
+      menus: menu,
+      isCollapse: false
+    }
+  },
+  computed: {
+    breadList() {
+      return this.$route.matched;
+    }
   },
   methods: {
-    user(){
+    user() {
       this.$message.info("暂未开放")
+    },
+    Collapse() {
+      this.isCollapse = !this.isCollapse
     },
     logout() {
       sessionStorage.clear()
       this.$router.push('/')
     },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
+
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .el-header {
   background-color: white;
-  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0;
+  align-items: center;
+  color: black;
+  font-size: 25px;
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 15px;
+    }
+
+  }
+
+  img {
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 15px;
+  }
+
 }
 
 .el-main {
   background-color: #F0F0F0
+}
+
+/* 加过渡给侧边导航*/
+.el-aside {
+  transition: width 0.25s;
+  -webkit-transition: width 0.25s;
+  -moz-transition: width 0.25s;
+  -webkit-transition: width 0.25s;
+  -o-transition: width 0.25s;
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+
+/*加快侧边栏文字消失的速度*/
+.el-menu {
+  transition: all 10ms;
 }
 
 </style>

@@ -9,8 +9,10 @@
           <!-- 列表 -->
           <div v-for="article in articles">
             <el-card style="margin-bottom: 20px">
-              <h3 style="text-align: left" @click="$router.push('/article/' + article.id)">{{ article.title }}</h3>
+              <h3 style="text-align: left" @click="toDetail(article.id)">{{ article.title }}</h3>
               <p style="text-align: left;color: gray">
+
+                <i class="el-icon-user"></i>:&nbsp;{{ article.author }}&nbsp;&nbsp;&nbsp;
                 <i class="el-icon-time"></i>:&nbsp;{{ article.date }}&nbsp;&nbsp;&nbsp;
                 <i class="el-icon-paperclip"></i>:&nbsp;
                 <el-tag size="mini">{{ article.tag }}</el-tag>
@@ -34,8 +36,9 @@
         <div style="width: 300px;float: right">
           <!--  介绍卡片   -->
           <el-card>
-            <img src="../assets/img/logo.png" style="height: 60px;border-radius: 50%">
-            <h3>Java加糖</h3>
+            <img src="../../assets/img/logo.png" style="height: 60px;border-radius: 50%"
+                 @click="$router.push(`/user`)">
+            <h3>Yang Yezhuang</h3>
             <el-divider></el-divider>
             <div style="margin-right: 10px">
               <a :href="tag.url" v-for="tag in infoTag" style="text-decoration: none">
@@ -78,8 +81,25 @@
             </div>
             <br>
           </el-card>
+
+          <!-- 最近文章  -->
+          <el-card style="margin-top: 20px">
+            <div slot="header" class="clearfix">
+              <i class="el-icon-document"></i>
+              <span>最近文章</span>
+            </div>
+
+            <!--              <div style="float: left" >-->
+            <p style="text-align: left;margin-bottom: 5px" v-for="article in lateArticles"
+               @click="$router.push('/article/'+article.id)">{{ article.title }}</p>
+            <!--  </div>-->
+            <br>
+          </el-card>
         </div>
       </div>
+
+      <!--  回到顶部   -->
+      <el-backtop :bottom="80">Top</el-backtop>
     </el-main>
 
     <Footer></Footer>
@@ -87,8 +107,8 @@
 </template>
 
 <script>
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 
 export default {
   name: "Index",
@@ -99,30 +119,25 @@ export default {
   data() {
     return {
       articles: [],
-
-      classItems: '',
+      lateArticles: [],
       queryInfo: {
         query: '',
         pagenum: 1, // 当前页数
         pagesize: 5 // 当前每页显示的条数
       },
-      totalSize: '',
       total: 0,
-
       infoTag: [
         {icon: '#icon-github', url: 'https://github.com/yangyezhuang'},
         {icon: '#icon-csdn', url: 'https://blog.csdn.net/qq_47183158'},
         {icon: '#icon-youxiang', url: ''},
         {icon: '#icon-twitter', url: ''}
       ],
-
       skills: [
         {name: 'Python', score: 90, type: 'primary'},
         {name: 'Web', score: 80, type: 'success'},
         {name: 'Java', score: 70, type: 'warning'},
         {name: 'Linux', score: 60, type: 'exception'}
       ],
-
       tags: [
         {label: 'java', value: 12, type: 'primary'},
         {label: 'spring', value: 15, type: 'warning'},
@@ -135,6 +150,7 @@ export default {
 
   created() {
     this.getAllArticles()
+    this.getLateArticles()
   },
 
   methods: {
@@ -144,6 +160,18 @@ export default {
       this.articles = res.data;
     },
 
+    toDetail(id) {
+      this.$router.push(`/article/${id}`)
+      // 访问量 +1
+      this.$http.put(`/pv/${id}`)
+    },
+
+    // 获取用户最近文章
+    async getLateArticles() {
+      let uid = sessionStorage.getItem('uid')
+      const {data: res} = await this.$http.get(`/articles/${uid}/articles`)
+      this.lateArticles = res.data;
+    },
 
     // 监听pagesize改变的事件
     handleSizeChange(newSize) {

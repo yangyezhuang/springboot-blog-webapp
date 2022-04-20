@@ -7,8 +7,12 @@
         <!-- 文章详情 -->
         <el-card style="height: auto;min-height: 620px">
           <h1>{{ detail.title }}</h1>
-
-          <div class="article-time">{{ detail.date }}</div>
+          <div class="article-time">
+            <i class="el-icon-user"></i>:&nbsp;{{ detail.author }}&nbsp;&nbsp;&nbsp;
+            <i class="el-icon-time"></i>:&nbsp;{{ detail.date }}&nbsp;&nbsp;&nbsp;
+            <i class="el-icon-view"></i>:&nbsp;{{ pv }}&nbsp;&nbsp;&nbsp;
+            <i class="el-icon-star-off"></i>:&nbsp;{{ star }}&nbsp;&nbsp;&nbsp;
+          </div>
           <!-- Markdown 查看器 -->
           <mavon-editor
               class="md"
@@ -21,8 +25,17 @@
               :ishljs="true"
               :codeStyle="codeStyle"
           ></mavon-editor>
+          <br>
+          <el-button icon="el-icon-thumb" @click="addStar">点赞</el-button>
+          <el-button icon="el-icon-star-off" @click="toCollect()">收藏</el-button>
+        </el-card>
+
+        <el-card style="height: 100px;margin-top: 20px">
+          <h3>评论</h3>
         </el-card>
       </div>
+
+      <el-backtop :bottom="80">Top</el-backtop>
     </el-main>
 
     <Footer></Footer>
@@ -30,8 +43,9 @@
 </template>
 
 <script>
-import Header from "./Header";
-import Footer from './Footer'
+import Header from "../layout/Header";
+import Footer from '../layout/Footer'
+import {Message} from "element-ui";
 
 export default {
   name: "Detail",
@@ -41,21 +55,50 @@ export default {
   },
   data() {
     return {
+      uid: sessionStorage.getItem("uid"),
+      article_id: this.$route.params.id,
       codeStyle: "atom-one-dark", //设置主题 ，
       detail: "",
+      pv: '',
+      star: ''
     };
   },
 
   created() {
+    this.getPv()
+    this.getStar()
     this.getDetail()
   },
 
   methods: {
     // 根据 id 进行查询
     async getDetail() {
-      let id = this.$route.params.id;
-      const {data: res} = await this.$http.get(`/article/${id}`)
+      const {data: res} = await this.$http.get(`/articles/article/${this.article_id}`)
       this.detail = res.data;
+    },
+
+    // 获取访问量
+    async getPv() {
+      const {data: res} = await this.$http.get(`/pv/${this.article_id}`)
+      this.pv = res.data
+    },
+
+    // 获取访问量
+    async getStar() {
+      const {data: res} = await this.$http.get(`/star/${this.article_id}`)
+      this.star = res.data
+    },
+
+    // 点赞
+    async addStar() {
+      const {data: res} = await this.$http.put(`/star/${this.article_id}`)
+    },
+
+    // 添加收藏
+    async toCollect() {
+      const {data: res} = await this.$http.post(`/collect/${this.uid}/article/${this.article_id}`)
+      if (res.code === 1)
+        Message.success("收藏成功")
     }
   }
 }

@@ -9,7 +9,7 @@
           <a href="http://localhost:8080/admin">后台管理</a>
           <br>
           <!--  <img src="../../assets/image/logo1.png" alt="" style="height: 40px"> -->
-          <p>Copyright © 2022 Java加糖. All Rights Reserved.</p>
+          <p>Copyright © 2022 Yang Yezhuang. All Rights Reserved.</p>
         </div>
       </div>
     </el-footer>
@@ -23,9 +23,10 @@ export default {
 </script>
 
 <style scoped>
-.el-footer{
+.el-footer {
   padding: 0;
 }
+
 .footer {
   height: 90px;
   background-color: white;

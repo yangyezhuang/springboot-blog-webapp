@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 export default {
   name: "Category",
@@ -66,19 +66,19 @@ export default {
   methods: {
     // 获取tags
     async getTag() {
-      const {data: res} = await this.$http.get('/getTag')
+      const {data: res} = await this.$http.get('/tags')
       this.tags = res.data
     },
 
     // 获取默认分类
     async getDefaultTag(){
-      const {data: res} = await this.$http.get(`/category/java`)
+      const {data: res} = await this.$http.get(`/articles/category/java`)
       this.articles = res.data
     },
 
     // 获取对应分类的文章
     async getArticleByTag(tag) {
-      const {data: res} = await this.$http.get(`/category/${tag}`)
+      const {data: res} = await this.$http.get(`/articles/category/${tag}`)
       this.articles = res.data
       if (this.articles.length === 0) {
         this.emptyShow = true

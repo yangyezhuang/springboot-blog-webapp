@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
 
 export default {
   name: "Search",
@@ -57,7 +57,7 @@ export default {
     async search() {
       this.keyword = this.$route.params.keyword
 
-      const {data: res} = await this.$http.get(`/search/${this.keyword}`)
+      const {data: res} = await this.$http.get(`/articles/search/${this.keyword}`)
       this.articles = res.data
       if (res.data.length === 0) {
         this.emptyShow = true

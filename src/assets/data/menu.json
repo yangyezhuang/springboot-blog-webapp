@@ -1,0 +1,86 @@
+[
+  {
+    "id": 0,
+    "authName": "首页",
+    "icon": "el-icon-s-home",
+    "children": [
+      {
+        "id": 1,
+        "path": "mg/welcome",
+        "authName": "主页",
+        "icon": "el-icon-pie-chart"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "authName": "用户管理",
+    "icon": "el-icon-s-custom",
+    "children": [
+      {
+        "id": 101,
+        "path": "mg/userManager/users",
+        "authName": "用户管理",
+        "icon": "el-icon-user"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "authName": "文章管理",
+    "icon": "el-icon-s-order",
+    "children": [
+      {
+        "id": 301,
+        "path": "mg/articleManager/article",
+        "authName": "文章管理",
+        "icon": "el-icon-files"
+      },
+      {
+        "id": 302,
+        "path": "mg/articleManager/write",
+        "authName": "添加文章",
+        "icon": "el-icon-upload"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "authName": "标签管理",
+    "icon": "el-icon-s-promotion",
+    "children": [
+      {
+        "id": 401,
+        "path": "mg/tagManager/tag",
+        "authName": "标签管理",
+        "icon": "el-icon-chat-dot-square"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "authName": "数据统计",
+    "icon": "el-icon-s-data",
+    "children": [
+      {
+        "id": 701,
+        "path": "mg/dataManager/sex",
+        "authName": "用户比例",
+        "icon": "el-icon-male"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "authName": "网站设置",
+    "icon": "el-icon-s-tools",
+    "children": [
+      {
+        "id": 601,
+        "path": "mg/settings/setting",
+        "authName": "设置",
+        "icon": "el-icon-picture-outline"
+      }
+    ]
+  }
+]
