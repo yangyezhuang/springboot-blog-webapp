@@ -2,7 +2,12 @@
   <div>
     <div v-for="article in articles">
       <el-card style="margin-bottom: 20px">
-        <h3 style="text-align: left" @click="$router.push('/article/' + article.id)">{{ article.title }}</h3>
+        <h3 style="text-align: left" @click="$router.push('/article/' + article.id)">{{ article.title }}   </h3>
+          <span style="float: right">
+          <el-button type="danger" icon="el-icon-delete" circle size="small"
+                     @click="delArticle(article.id)"></el-button>
+        </span>
+
         <p style="text-align: left;color: gray">
           <i class="el-icon-time"></i>:&nbsp;{{ article.date }}&nbsp;&nbsp;&nbsp;
           <i class="el-icon-paperclip"></i>:&nbsp;
@@ -10,21 +15,21 @@
         </p>
         <div style="text-align: left;color: gray">
           {{ article.content.replace(/[#]/g, "").slice(0, 60) }}...
+          <span style="color: #3f51b5" @click="$router.push('/article/' + article.id)">阅读原文</span>
         </div>
-        <span style="color: #3f51b5" @click="$router.push('/article/' + article.id)">阅读原文</span>
-        <span>
-          <el-button icon="el-icon-delete" size="small" @click="delArticle(article.id)"></el-button>
-        </span>
       </el-card>
     </div>
   </div>
 </template>
 
 <script>
-import {Message} from "element-ui";
+import ArticleList from "../layout/ArticleList";
 
 export default {
   name: "UserArticle",
+  components: {
+    ArticleList
+  },
   data() {
     return {
       uid: sessionStorage.getItem("uid"),
@@ -37,7 +42,7 @@ export default {
   methods: {
     // 获取全部文章
     async getAllArticles() {
-      const {data: res} = await this.$http.get(`/articles/${this.uid}/articles`)
+      const {data: res} = await this.$http.get(`/articles/user/${this.uid}`)
       this.articles = res.data;
     },
 
@@ -47,10 +52,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$http.delete(`/collect/${this.uid}/article/${article_id}`).then((res) => {
+        this.$http.delete(`/articles/${article_id}`).then((res) => {
           // if (res.code === 1)
           //   location.reload()
-          Message.success("取消收藏")
+          this.$message.success("取消收藏")
           location.reload()
         })
       }).catch(() => {

@@ -3,7 +3,7 @@
     <el-footer>
       <div class="footer">
         <div>
-          <h4 style="margin: 0">牛油果博客</h4><br>
+          <h4 style="margin: 0">Sun博客</h4><br>
           <a href="https://blog.csdn.net/qq_47183158">CSDN</a> |
           <a href="https://github.com/yangyezhuang">Github</a> |
           <a href="http://localhost:8080/admin">后台管理</a>

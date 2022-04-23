@@ -3,6 +3,10 @@
     <div v-for="article in articles">
       <el-card style="margin-bottom: 20px">
         <h3 style="text-align: left" @click="$router.push('/article/' + article.id)">{{ article.title }}</h3>
+        <span style="float: right">
+          <el-button type="danger" icon="el-icon-delete" circle size="small"
+                     @click="delCollect(article.id)"></el-button>
+        </span>
         <p style="text-align: left;color: gray">
           <i class="el-icon-time"></i>:&nbsp;{{ article.date }}&nbsp;&nbsp;&nbsp;
           <i class="el-icon-paperclip"></i>:&nbsp;
@@ -10,19 +14,14 @@
         </p>
         <div style="text-align: left;color: gray">
           {{ article.content.replace(/[#]/g, "").slice(0, 60) }}...
+          <span style="color: #3f51b5" @click="$router.push('/article/' + article.id)">阅读原文</span>
         </div>
-        <span style="color: #3f51b5" @click="$router.push('/article/' + article.id)">阅读原文</span>
-        <span>
-          <el-button icon="el-icon-delete" size="small" @click="delCollect(article.id)"></el-button>
-        </span>
       </el-card>
     </div>
   </div>
 </template>
 
 <script>
-import {Message} from "element-ui";
-
 export default {
   name: "UserCollect",
   data() {
@@ -41,11 +40,7 @@ export default {
       this.articles = res.data;
     },
 
-    toUserPage() {
-      let uid = 10001
-      this.$router.push(`/user`)
-    },
-
+    // 取消收藏
     delCollect(article_id) {
       this.$confirm('是否取消收藏该文章?', '提示', {
         confirmButtonText: '确定',
@@ -55,7 +50,7 @@ export default {
         this.$http.delete(`/collect/${this.uid}/article/${article_id}`).then((res) => {
           // if (res.code === 1)
           //   location.reload()
-          Message.success("取消收藏")
+          this.$message.success("取消收藏")
           location.reload()
         })
       }).catch(() => {

@@ -8,14 +8,15 @@
         <el-menu-item index="/" style="font-size: 18px;">首页</el-menu-item>
         <el-menu-item index="/category" style="font-size: 18px;">分类</el-menu-item>
         <el-menu-item index="/archive" style="font-size: 18px;">归档</el-menu-item>
+        <el-menu-item index="/message" style="font-size: 18px;">留言</el-menu-item>
         <el-menu-item index="/about" style="font-size: 18px;">关于</el-menu-item>
         <el-menu-item style="font-size: 18px;">
           <el-input placeholder="请输入相关内容" v-model="keyword">
             <el-button slot="append" icon="el-icon-search" @click="search(keyword)"></el-button>
           </el-input>
         </el-menu-item>
-        <el-menu-item style="font-size: 18px;float: right" @click="login()">
-          <p v-show="loginShow" style="margin-top: 0">登录</p>
+        <el-menu-item style="font-size: 18px;float: right">
+          <p v-show="loginShow" style="margin-top: 0" @click="login()">登录</p>
           <!--          <el-avatar v-show="avatarShow"> {{username}}</el-avatar>-->
           <!--  下拉列表  -->
           <el-popover
@@ -24,9 +25,9 @@
               width=100
               trigger="hover">
             <el-avatar slot="reference">{{ username }}</el-avatar>
-            用户：{{ username }}
+            用户名：{{ username }}
             <br>
-            UID：{{ uid }}
+            uid：{{ uid }}
             <el-menu-item index="/user/info">
               <i class="el-icon-user"></i>
               个人中心
@@ -71,14 +72,23 @@ export default {
     search() {
       this.$router.push(`/search/${this.keyword}`)
     },
+    open1() {
+      const h = this.$createElement;
+
+      this.$notify({
+        title: '标题名称',
+        message: h('i', {style: 'color: teal'}, '这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案这是提示文案')
+      });
+    },
     login() {
       this.visible = true
     },
     logout() {
       sessionStorage.clear(); // 清除token
-      this.$router.push("/")
       this.loginShow = true
       this.avatarShow = false
+      this.$router.push("/")
+      location.reload()
     }
   }
 }
@@ -87,6 +97,11 @@ export default {
 <style scoped>
 .el-header {
   background-color: white;
+}
+
+.item {
+  /*margin-top: 10px;*/
+  margin-right: 40px;
 }
 
 </style>

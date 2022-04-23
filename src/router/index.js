@@ -6,6 +6,7 @@ import Category from "../views/front/main/Category";
 import Archive from "../views/front/main/Archive";
 import Detail from "../views/front/main/Detail";
 import Search from "../views/front/main/Search";
+import Message from "../views/front/main/Message";
 import About from "../views/front/other/About";
 import Error from '../views/front/other/404'
 import User from "../views/front/user/User";
@@ -24,8 +25,14 @@ import Setting from "../views/admin/setting/Setting";
 import UserCollect from "../views/front/user/UserCollect";
 import UserList from "../views/admin/userMg/UserList";
 import Sex from '../views/admin/statistic/Sex'
-
-
+import CommentList from "../views/admin/commentMg/CommentList";
+import UserPage from "../views/front/main/UserPage";
+import MessageList from "../views/admin/msgMg/MessageList";
+import NoticeList from "../views/admin/msgMg/NoticeList";
+import TagPage from "../views/front/main/TagPage";
+import CategoryStatistic from "../views/admin/statistic/CategoryStatistic";
+import PvStatistic from "../views/admin/statistic/PvStatistic";
+import InfoCenter from "../views/admin/other/InfoCenter";
 Vue.use(VueRouter)
 
 const routes = [
@@ -49,6 +56,14 @@ const routes = [
         path: '/search/:keyword',
         component: Search,
     },
+    {
+        path: '/tags/:tag',
+        component: TagPage
+    },
+    {
+        path: '/uid/:uid',
+        component: UserPage
+    },
 
     {
         path: '/user',
@@ -62,9 +77,13 @@ const routes = [
         ]
     },
     {
+        path: '/message',
+        component: Message,
+    }, {
         path: '/about',
         component: About,
-    }, {
+    },
+    {
         path: '/404',
         component: Error,
     },
@@ -83,6 +102,7 @@ const routes = [
         redirect: '/mg/welcome',
         meta: {title: '首页'},
         children: [
+            {path: 'info', component: InfoCenter, meta: {title: '个人中心'}},
             {path: 'welcome', component: Welcome, meta: {title: '欢迎页'}},
             {
                 path: 'userManager',
@@ -97,8 +117,6 @@ const routes = [
                 component: BreadCrumb,
                 meta: {title: '文章管理'},
                 children: [
-                    // {path: 'users', component: Welcome, meta: {title: '文章列表'}},
-                    // {path: 'add', component: ArticleMg, meta: {title: '添加文章'}},
                     {path: 'article', component: ArticleMg, meta: {title: '文章管理'}},
                     {path: 'write', component: Push, meta: {title: '创作中心'}},
                     {path: 'edit/:id', component: Edit, meta: {title: '创作中心'}},
@@ -113,11 +131,30 @@ const routes = [
                 ]
             },
             {
+                path: 'commentManager',
+                component: BreadCrumb,
+                meta: {title: '评论管理'},
+                children: [
+                    {path: 'comment', component: CommentList, meta: {title: '评论管理'}}
+                ]
+            },
+            {
+                path: 'msgManager',
+                component: BreadCrumb,
+                meta: {title: '留言公告'},
+                children: [
+                    {path: 'message', component: MessageList, meta: {title: '留言管理'}},
+                    {path: 'notice', component: NoticeList, meta: {title: '公告管理'}}
+                ]
+            },
+            {
                 path: 'dataManager',
                 component: BreadCrumb,
                 meta: {title: '数据统计'},
                 children: [
-                    {path: 'sex', component: Sex, meta: {title: '性别统计'}}
+                    {path: 'sex', component: Sex, meta: {title: '性别统计'}},
+                    {path: 'category', component: CategoryStatistic, meta: {title: '类别统计'}},
+                    {path: 'pv', component: PvStatistic, meta: {title: '用户访问量'}},
                 ]
             },
             {

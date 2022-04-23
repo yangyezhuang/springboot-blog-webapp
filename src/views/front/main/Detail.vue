@@ -6,7 +6,11 @@
       <div style="width: 1000px;margin: 0 auto">
         <!-- 文章详情 -->
         <el-card style="height: auto;min-height: 620px">
-          <h1>{{ detail.title }}</h1>
+          <h1>{{ detail.title }}
+            <!--          <span style="float: right">-->
+            <!--            <el-button>作者主页</el-button>-->
+            <!--          </span>-->
+          </h1>
           <div class="article-time">
             <i class="el-icon-user"></i>:&nbsp;{{ detail.author }}&nbsp;&nbsp;&nbsp;
             <i class="el-icon-time"></i>:&nbsp;{{ detail.date }}&nbsp;&nbsp;&nbsp;
@@ -26,13 +30,12 @@
               :codeStyle="codeStyle"
           ></mavon-editor>
           <br>
-          <el-button icon="el-icon-thumb" @click="addStar">点赞</el-button>
-          <el-button icon="el-icon-star-off" @click="toCollect()">收藏</el-button>
+          <el-button icon="el-icon-thumb" type="danger" plain @click="addStar">点赞</el-button>
+          <el-button icon="el-icon-star-off" type="primary" plain @click="toCollect()">收藏</el-button>
         </el-card>
 
-        <el-card style="height: 100px;margin-top: 20px">
-          <h3>评论</h3>
-        </el-card>
+        <!-- 评论组件  -->
+        <comment :article_id="article_id"></comment>
       </div>
 
       <el-backtop :bottom="80">Top</el-backtop>
@@ -45,17 +48,19 @@
 <script>
 import Header from "../layout/Header";
 import Footer from '../layout/Footer'
-import {Message} from "element-ui";
+import Comment from "./Comment";
 
 export default {
   name: "Detail",
   components: {
     Header,
-    Footer
+    Footer,
+    Comment
   },
   data() {
     return {
       uid: sessionStorage.getItem("uid"),
+      username: sessionStorage.getItem('username'),
       article_id: this.$route.params.id,
       codeStyle: "atom-one-dark", //设置主题 ，
       detail: "",
@@ -96,9 +101,13 @@ export default {
 
     // 添加收藏
     async toCollect() {
-      const {data: res} = await this.$http.post(`/collect/${this.uid}/article/${this.article_id}`)
-      if (res.code === 1)
-        Message.success("收藏成功")
+      if (this.username) {
+        const {data: res} = await this.$http.post(`/collect/${this.uid}/article/${this.article_id}`)
+        if (res.code === 1)
+          this.$message.success("收藏成功")
+      } else {
+        this.$message.info('请先登录')
+      }
     }
   }
 }

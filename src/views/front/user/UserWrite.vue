@@ -56,6 +56,7 @@ export default {
       tags: "",
       // 文章数据表单
       ruleForm: {
+        uid: sessionStorage.getItem('uid'),
         author: sessionStorage.getItem('username'),
         title: "",
         tag: "",
@@ -93,7 +94,6 @@ export default {
         if (valid) {
           alert("submit!");
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

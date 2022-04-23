@@ -5,9 +5,15 @@
     <el-main>
       <div style="width: 1200px;min-height: 650px;margin: 0 auto">
         <el-card>
-          <img src="../../../assets/img/logo.png" alt="" style="width: 100px">
+          <!--          <p>{{ uid }}</p>-->
+          <el-avatar  style="background-color: gold" :size="60">{{ username }}</el-avatar>
+
           <h3>{{ username }}</h3>
-          <p>{{ uid }}</p>
+          <i class="el-icon-edit-outline"> 还没有介绍哦...</i>
+          <p>
+            <span style="margin-right: 20px">关注：12 </span>
+            <span>粉丝：9999+</span>
+          </p>
 
           <el-divider></el-divider>
 
@@ -22,7 +28,6 @@
               </el-input>
             </el-menu-item>
           </el-menu>
-
           <br>
 
           <router-view></router-view>
@@ -57,8 +62,8 @@ export default {
       this.uid = this.$route.params.uid
     },
 
-    search() {
-
+    search(keyword) {
+      // this.$router.push(`/search/${this.keyword}`)
     }
   }
 }

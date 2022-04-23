@@ -1,17 +1,20 @@
 <template>
   <div>
-    <el-dialog title="登录" :visible.sync="openCardDialog">
-      <el-form :model="form">
-        <el-form-item label="账号" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+    <el-dialog title="登 录" :visible.sync="openCardDialog" width="400px" center>
+      <el-form :model="form" label-width="40px">
+        <el-form-item label="账号">
+          <el-input v-model="form.username" placeholder="请输入账号"></el-input>
         </el-form-item>
-        <el-form-item label="密码" :label-width="formLabelWidth">
-          <el-input v-model="form.password" autocomplete="off"></el-input>
+        <el-form-item label="密码">
+          <el-input type="password" v-model="form.password" placeholder="请输入密码"></el-input>
         </el-form-item>
       </el-form>
+
+      <register-dialog :visible.sync="RegistartVisible"></register-dialog>
+
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="login">登 录</el-button>
-        <el-button @click="dialogFormVisible = false">注 册</el-button>
+        <el-button @click="register">注 册</el-button>
       </div>
     </el-dialog>
   </div>
@@ -19,13 +22,26 @@
 
 <script>
 import {Message} from "element-ui";
+import RegisterDialog from "./RegisterDialog";
 
 export default {
   name: "LoginDialog",
+  components: {
+    RegisterDialog
+  },
   props: {
     visible: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      form: {
+        username: '',
+        password: ''
+      },
+      RegistartVisible: false
     }
   },
   computed: {
@@ -38,19 +54,22 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      form: '',
-      formLabelWidth: 120,
-    }
-  },
+
   methods: {
-    login() {
-      sessionStorage.setItem("uid", 10001)
-      sessionStorage.setItem("username", 'admin')
-      Message.success('登陆成功')
-      location.reload()
+    async login() {
+      const {data: res} = await this.$http.post(`/user/login`, this.form)
+      if (res.code === 1) {
+        sessionStorage.setItem("uid", res.data.id)
+        sessionStorage.setItem("username", res.data.username)
+        Message.success('登陆成功')
+        location.reload()
+      }
+
       // this.visible = false
+    },
+
+    register() {
+      this.RegistartVisible = true
     }
   }
 

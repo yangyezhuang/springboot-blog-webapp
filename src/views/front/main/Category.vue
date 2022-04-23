@@ -11,27 +11,15 @@
           </el-menu>
 
           <!-- 列表 -->
-          <div v-for="article in articles">
-            <el-card style="margin-top: 20px">
-              <h3 style="text-align: left" @click="$router.push('/article/' + article.id)">{{ article.title }}</h3>
-              <p style="text-align: left;color: gray">
-                <i class="el-icon-time"></i>:&nbsp;{{ article.date }}&nbsp;&nbsp;&nbsp;
-                <i class="el-icon-paperclip"></i>:&nbsp;
-                <el-tag size="mini">{{ article.tag }}</el-tag>
-              </p>
-              <div style="text-align: left;color: gray">
-                {{ article.content.replace(/[#]/g, "").slice(0, 60) }}...
-              </div>
-              <span style="color: #3f51b5" @click="$router.push('/article/' + article.id)">阅读原文</span>
-            </el-card>
-          </div>
+          <article-list :articles="articles"></article-list>
 
-          <!--   空状态   -->
-          <div v-show="emptyShow">
-            <el-empty description="暂无相关文章"></el-empty>
-          </div>
+          <!--  空状态  -->
+          <el-empty v-show="emptyShow" description="暂无相关文章"></el-empty>
         </el-card>
       </div>
+
+      <!--  回到顶部   -->
+      <el-backtop :bottom="80">Top</el-backtop>
     </el-main>
 
     <Footer></Footer>
@@ -41,12 +29,14 @@
 <script>
 import Header from "../layout/Header";
 import Footer from "../layout/Footer";
+import ArticleList from "../layout/ArticleList";
 
 export default {
   name: "Category",
   components: {
     Header,
-    Footer
+    Footer,
+    ArticleList
   },
 
   data() {
@@ -71,7 +61,7 @@ export default {
     },
 
     // 获取默认分类
-    async getDefaultTag(){
+    async getDefaultTag() {
       const {data: res} = await this.$http.get(`/articles/category/java`)
       this.articles = res.data
     },

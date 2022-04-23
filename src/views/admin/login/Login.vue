@@ -1,7 +1,7 @@
 <template>
   <div class="login_container">
     <div class="login_box">
-      <h1 style="margin-top: 50px">牛油果博客后台</h1>
+      <h1 style="margin-top: 50px">Sun博客后台</h1>
 
       <!--  登录表单 -->
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_info">
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {Message} from "element-ui";
+
 export default {
   name: "Login",
   data() {
@@ -47,7 +49,13 @@ export default {
   methods: {
     // 登录
     async login() {
-      this.$router.push('/mg/welcome')
+      if (this.loginForm.username === 'admin' & this.loginForm.password === 'admin') {
+        this.$router.push('/mg/welcome')
+        Message.success('登陆成功')
+      } else {
+        Message.error('账号或密码错误')
+      }
+
 
       // const {data: res} = await this.$http.post('/login', this.loginForm);
       // if (res.code !== 1) {

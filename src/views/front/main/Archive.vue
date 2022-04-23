@@ -4,8 +4,8 @@
 
     <el-main>
       <div class="block" style="width: 1000px;height:auto;margin: 0 auto">
-        <el-card style="height: auto;min-height: 650px">
-          <h2 style="color:#E7A53C;">归档：124篇</h2>
+        <el-card style="height: auto;min-height: 560px">
+          <h2 style="color:#F9C626;">归档：124篇</h2>
           <el-timeline :reverse="reverse">
             <el-timeline-item
                 style="text-align: left"
@@ -16,9 +16,7 @@
             </el-timeline-item>
           </el-timeline>
         </el-card>
-
       </div>
-
     </el-main>
 
     <Footer></Footer>

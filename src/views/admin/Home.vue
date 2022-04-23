@@ -6,7 +6,7 @@
         <el-menu
             router
             unique-opened
-            background-color="#8AC072"
+            background-color="#99CCCC"
             text-color="white"
             active-text-color="#eb4d4b"
             class="el-menu-vertical-demo"
@@ -29,7 +29,7 @@
           >
             <template slot="title">
               <i :class="item.icon"></i>
-              <span>{{ item.authName }}</span>
+              <span>{{ item.name }}</span>
             </template>
 
             <!-- 二级菜单 -->
@@ -40,7 +40,7 @@
             >
               <template slot="title">
                 <i :class="subItem.icon"></i>
-                <span>{{ subItem.authName }}</span>
+                <span>{{ subItem.name }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -94,7 +94,7 @@ export default {
   name: "Home",
   data() {
     return {
-      menus: menu,
+      menus: '',
       isCollapse: false
     }
   },
@@ -103,9 +103,19 @@ export default {
       return this.$route.matched;
     }
   },
+
+  created() {
+    this.getMenu()
+  },
   methods: {
+    // 获取菜单
+    async getMenu() {
+      const {data: res} = await this.$http.get('/menus')
+      this.menus = res.data
+    },
     user() {
-      this.$message.info("暂未开放")
+      this.$router.push('/mg/info')
+      // this.$message.info("暂未开放")
     },
     Collapse() {
       this.isCollapse = !this.isCollapse
@@ -113,8 +123,7 @@ export default {
     logout() {
       sessionStorage.clear()
       this.$router.push('/')
-    },
-
+    }
   }
 }
 </script>
@@ -145,6 +154,16 @@ export default {
     margin-left: 15px;
   }
 
+}
+
+.el-aside {
+  //background-color: #324c6d;
+  height: auto;
+
+  .el-menu {
+    border-right: none;
+    height: auto;
+  }
 }
 
 .el-main {

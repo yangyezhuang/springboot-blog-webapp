@@ -50,19 +50,16 @@ export default {
       queryInfo: {
         query: '',
         pagenum: 1, // 当前页数
-        pagesize: 8 // 当前每页显示的条数
+        pagesize: 7 // 当前每页显示的条数
       },
       totalSize: '',
       articles: [],
       total: 0
     };
   },
-
-
   created() {
     this.getAll()
   },
-
   methods: {
     // 获取全部文章
     async getAll() {
@@ -83,7 +80,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$http.delete(`/articles/delete/${id}`).then((res) => {
+        this.$http.delete(`/articles/${id}`).then((res) => {
           // if (res.code === 1)
           //   location.reload()
           Message.success("取消收藏")

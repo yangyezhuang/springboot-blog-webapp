@@ -23,7 +23,7 @@ import axios from "axios";
 // this.article.html = marked(this.article.content)
 
 Vue.prototype.$http = axios
-axios.defaults.baseURL = 'http://localhost:3001'
+axios.defaults.baseURL = 'http://localhost:80'
 Vue.use(mavonEditor);
 
 Vue.config.productionTip = false
