@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>创作中心</h3>
     <el-form
         :model="ruleForm"
         :rules="rules"
@@ -28,7 +29,7 @@
       <!-- 嵌入 Markdown 编辑器 -->
       <el-form-item label="内容">
         <mavon-editor
-            style="height: 400px"
+            style="height: 500px"
             v-model="ruleForm.content"
             @save=""
         ></mavon-editor>

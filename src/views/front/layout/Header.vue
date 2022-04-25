@@ -28,7 +28,7 @@
             用户名：{{ username }}
             <br>
             uid：{{ uid }}
-            <el-menu-item index="/user/info">
+            <el-menu-item index="/user/article">
               <i class="el-icon-user"></i>
               个人中心
             </el-menu-item>

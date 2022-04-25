@@ -31,31 +31,15 @@
               <el-avatar style="background-color: gold" :size="55">{{ username }}</el-avatar>
               <h3>{{ username }}</h3>
             </div>
-
-            <el-divider></el-divider>
-            <div style="margin-right: 10px">
-              <a :href="tag.url" v-for="tag in infoTag" style="text-decoration: none">
-                <svg class="icon" aria-hidden="true">
-                  <use :xlink:href="tag.icon"></use>
-                </svg> &nbsp;
-              </a>
-            </div>
+            <i class="el-icon-edit-outline"> 还没有介绍哦...</i>
+            <p>
+              <span style="margin-right: 20px">关注：12 </span>
+              <span>粉丝：9999+</span>
+            </p>
           </el-card>
 
           <!-- 标签  -->
-          <el-card style="margin-top: 20px">
-            <div slot="header" class="clearfix">
-              <i class="el-icon-collection-tag"></i>
-              <span>标签</span>
-            </div>
-            <div style="float: left">
-              <el-tag style="margin-right: 10px;margin-bottom: 5px" size="medium" v-for="tag in tags" :type="tag.type"
-                      @click="$router.push(`/tags/${tag.label}`)">
-                {{ tag.label }} [{{ tag.value }}]
-              </el-tag>
-            </div>
-            <br>
-          </el-card>
+          <tag-info></tag-info>
 
           <!-- csdn二维码  -->
           <el-card style="margin-top: 20px" v-show="QrCodeShow">
@@ -103,11 +87,12 @@
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import ArticleList from "./layout/ArticleList";
+import TagInfo from "./layout/TagInfo";
 
 export default {
   name: "Index",
   components: {
-    Header, Footer, ArticleList
+    Header, Footer, ArticleList,TagInfo
   },
   data() {
     return {
@@ -131,14 +116,7 @@ export default {
         {icon: '#icon-csdn', url: 'https://blog.csdn.net/qq_47183158'},
         {icon: '#icon-youxiang', url: ''},
         {icon: '#icon-twitter', url: ''}
-      ],
-      tags: [
-        {label: 'java', value: 12, type: 'primary'},
-        {label: 'spring', value: 15, type: 'warning'},
-        {label: 'vue', value: 7, type: 'success'},
-        {label: 'mysql', value: 9, type: 'info'},
-        {label: 'python', value: 21, type: 'danger'}
-      ],
+      ]
     };
   },
 
@@ -166,10 +144,6 @@ export default {
     async getAllArticles() {
       const {data: res} = await this.$http.get("/articles")
       this.articles = res.data;
-    },
-
-    toDetail(id) {
-      this.$router.push(`/article/${id}`)
     },
 
     // 获取用户最近文章

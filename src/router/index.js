@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 
 import Index from '../views/front/Index'
 import Category from "../views/front/main/Category";
@@ -33,7 +34,7 @@ import TagPage from "../views/front/main/TagPage";
 import CategoryStatistic from "../views/admin/statistic/CategoryStatistic";
 import PvStatistic from "../views/admin/statistic/PvStatistic";
 import InfoCenter from "../views/admin/other/InfoCenter";
-Vue.use(VueRouter)
+import UserData from "../views/front/user/UserData";
 
 const routes = [
     {
@@ -74,6 +75,7 @@ const routes = [
             {path: 'article', component: UserArticle},
             {path: 'collect', component: UserCollect},
             {path: 'write', component: UserWrite},
+            {path: 'data', component: UserData},
         ]
     },
     {

@@ -13,13 +13,16 @@
             :collapse="isCollapse"
         >
           <!--  logo  -->
-          <el-submenu>
-            <template slot="title">
-              <img src="../../assets/img/logo.png" alt="" style="width: 25px;float: left;margin-top: 15px">
-              <span style="text-align: center;font-size: 17px;color: white;
+          <el-menu-item>
+            <img src="../../assets/img/logo.png" alt="" style="width: 25px;float: left;margin-top: 15px">
+            <span style="text-align: center;font-size: 17px;color: white;
             margin-top: 0;margin-bottom: 0;margin-left: 7px">后台管理系统</span>
-            </template>
-          </el-submenu>
+          </el-menu-item>
+
+          <el-menu-item index="/mg/welcome">
+            <i class="el-icon-s-home"></i>
+            <span>主页</span>
+          </el-menu-item>
 
           <!-- 一级菜单 -->
           <el-submenu

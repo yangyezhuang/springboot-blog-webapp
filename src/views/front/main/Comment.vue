@@ -81,14 +81,14 @@ export default {
     // 获取评论
     async getComments() {
       const {data: res} = await this.$http.get(`/comments/article/${this.article_id}`)
-      this.commentList = res.data
+      this.commentList = res.data.reverse()
     },
 
     // 添加评论
     async addComment() {
       // 判断是否登录
       if (this.username) {
-        const {data: res} = await this.$http.post(`/comments/add`, this.commentForm)
+        const {data: res} = await this.$http.post(`/comments`, this.commentForm)
         if (res.code === 1) {
           this.$message.success('发表成功')
           this.getComments()

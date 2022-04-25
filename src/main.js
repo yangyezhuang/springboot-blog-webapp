@@ -12,15 +12,16 @@ import '../src/assets/icon/iconfont'
 // markdown
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-// import 'mavon-editor/src/lib/core/hljs/lang.hljs.css'; // 代码块高亮样式
-//引入marked，数据库存储数据为md文件，所以需要转译为html文件
-// import marked from 'marked'
 // 代码高亮
 import '../src/util/hljs'
 import axios from "axios";
-
-//通过marked()转译
+// 代码块高亮样式
+// import 'mavon-editor/src/lib/core/hljs/lang.hljs.css';
+// 引入marked，数据库存储数据为md文件，所以需要转译为html文件
+// import marked from 'marked'
+// 通过marked()转译
 // this.article.html = marked(this.article.content)
+
 
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'http://localhost:80'
