@@ -4,20 +4,13 @@
 
     <el-main>
       <div style="width: 1100px;margin: 0 auto">
-        <!--   左边主体    -->
+      <!--   右边主体    -->
         <div style="width: 780px;float: right;">
           <!-- 列表 -->
           <article-list :articles="articles"></article-list>
-
-          <!--  分页 -->
-          <el-pagination
-              background
-              layout="prev, pager, next"
-              :total="25">
-          </el-pagination>
         </div>
 
-        <!--   右边主体    -->
+        <!--   左边主体    -->
         <div style="width: 290px;float: left">
           <!--  介绍卡片   -->
           <el-card>

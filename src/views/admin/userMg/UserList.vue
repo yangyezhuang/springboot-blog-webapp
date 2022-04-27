@@ -18,9 +18,16 @@
       <el-table :data="userList.slice((queryInfo.pagenum-1)*queryInfo.pagesize,queryInfo.pagenum*queryInfo.pagesize)"
                 border stripe>
         <el-table-column type="index"></el-table-column>
-        <el-table-column label="id" prop="id" width="100px"></el-table-column>
-        <el-table-column label="用户名" prop="username" width="150px"></el-table-column>
-        <el-table-column label="密码" prop="password" show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作" width="62px">
+          <template v-slot="scope">
+            <el-avatar> {{scope.row.username}} </el-avatar>
+          </template>
+          <update-info-dialog :visible.sync="updateVisible"></update-info-dialog>
+        </el-table-column>
+        <el-table-column label="id" prop="id" width="120px"></el-table-column>
+        <el-table-column label="用户名" prop="username" width="180px"></el-table-column>
+        <el-table-column label="密码" prop="password" show-overflow-tooltip width="180px"></el-table-column>
+        <el-table-column label="备注" prop="" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="150px">
           <template v-slot="scope">
             <el-button type="primary" icon="el-icon-edit" @click="updateUser(scope.row.id)"></el-button>
@@ -102,12 +109,7 @@ export default {
           Message.success("取消收藏")
           location.reload()
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+      })
     },
 
     // 监听pagesize改变的事件

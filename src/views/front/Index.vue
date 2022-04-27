@@ -9,12 +9,6 @@
           <!-- 列表 -->
           <article-list :articles="articles"></article-list>
 
-          <!--  分页 -->
-          <el-pagination
-              background
-              layout="prev, pager, next"
-              :total="100">
-          </el-pagination>
         </div>
 
         <!--   右边主体    -->
@@ -105,12 +99,6 @@ export default {
       QrCodeShow: true,
       archiveShow: false,
       lateArticleShow: false,
-      queryInfo: {
-        query: '',
-        pagenum: 1, // 当前页数
-        pagesize: 5 // 当前每页显示的条数
-      },
-      total: 0,
       infoTag: [
         {icon: '#icon-github', url: 'https://github.com/yangyezhuang'},
         {icon: '#icon-csdn', url: 'https://blog.csdn.net/qq_47183158'},
@@ -150,18 +138,7 @@ export default {
     async getLateArticles() {
       const {data: res} = await this.$http.get(`/articles/user/${this.uid}`)
       this.lateArticles = res.data;
-    },
-
-    // 监听pagesize改变的事件
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
-    },
-
-    // 监听页码值改变的事件
-    handleCurrentChange(pageNum) {
-      this.queryInfo.pagenum = pageNum
     }
-
   }
 }
 </script>

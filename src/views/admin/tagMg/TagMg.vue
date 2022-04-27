@@ -4,7 +4,7 @@
       <!--  添加标签  -->
       <el-row :gutter="10">
         <el-col :span="4">
-          <el-button  @click="addTag">添加标签</el-button>
+          <el-button @click="addTag">添加标签</el-button>
         </el-col>
       </el-row>
 
@@ -93,9 +93,7 @@ export default {
           Message.success("删除成功")
           location.reload()
         })
-      }).catch(() => {
-        this.$message.info('已取消删除');
-      });
+      })
     },
 
     // 监听pagesize改变的事件

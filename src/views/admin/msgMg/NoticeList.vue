@@ -9,8 +9,26 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button>发布公告</el-button>
+          <el-button @click="openNoticeDialog()">发布公告</el-button>
         </el-col>
+
+        <el-dialog title="发布公告" :visible.sync="dialogFormVisible">
+          <el-form :model="form">
+            <el-form-item label="公告名称" :label-width="formLabelWidth">
+              <el-input v-model="form.title" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="公告内容" :label-width="formLabelWidth">
+              <el-input v-model="form.content" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="发布者" :label-width="formLabelWidth">
+              <el-input v-model="form.author" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addNotice()">确 定</el-button>
+          </div>
+        </el-dialog>
       </el-row>
 
       <!-- 列表 -->
@@ -50,6 +68,13 @@ export default {
   name: "NoticeList",
   data() {
     return {
+      form: {
+        title: '',
+        content: '',
+        author: '网站管理员'
+      },
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
       noticeList: '',
       queryInfo: {
         query: '',
@@ -69,6 +94,20 @@ export default {
       this.noticeList = res.data
     },
 
+    openNoticeDialog() {
+      this.dialogFormVisible = true
+    },
+
+    // 添加公告
+    async addNotice() {
+      const {data: res} = await this.$http.post(`/notices`, this.form)
+      if (res.code === 1) {
+        Message.success('发布成功')
+        location.reload()
+      }
+    },
+
+    // 删除公告
     delNotice(id) {
       this.$confirm('是否删除该公告?', '提示', {
         confirmButtonText: '确定',
@@ -81,11 +120,6 @@ export default {
           Message.success("删除成功")
           location.reload()
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
       });
     },
 

@@ -7,9 +7,9 @@
         </el-menu-item>
         <el-menu-item index="/" style="font-size: 18px;">首页</el-menu-item>
         <el-menu-item index="/category" style="font-size: 18px;">分类</el-menu-item>
-        <el-menu-item index="/archive" style="font-size: 18px;">归档</el-menu-item>
+        <el-menu-item index="/archive" style="font-size: 18px;">历程</el-menu-item>
         <el-menu-item index="/message" style="font-size: 18px;">留言</el-menu-item>
-        <el-menu-item index="/about" style="font-size: 18px;">关于</el-menu-item>
+        <el-menu-item index="/about" style="font-size: 18px;">公告</el-menu-item>
         <el-menu-item style="font-size: 18px;">
           <el-input placeholder="请输入相关内容" v-model="keyword">
             <el-button slot="append" icon="el-icon-search" @click="search(keyword)"></el-button>

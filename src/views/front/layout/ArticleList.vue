@@ -27,6 +27,13 @@
         <span style="color: #3f51b5" @click="$router.push('/article/' + article.id)">阅读原文</span>
       </el-card>
     </div>
+
+    <!--  分页 -->
+    <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="10">
+    </el-pagination>
   </div>
 </template>
 
@@ -40,7 +47,14 @@ export default {
       articles: '',
       emptyShow: '',
       articleShow: false,
-      collectShow: false
+      collectShow: false,
+
+      queryInfo: {
+        query: '',
+        pagenum: 1, // 当前页数
+        pagesize: 5 // 当前每页显示的条数
+      },
+      total: 0,
     }
   },
   watch: {
@@ -91,6 +105,16 @@ export default {
           location.reload()
         })
       })
+    },
+
+    // 监听pagesize改变的事件
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+    },
+
+    // 监听页码值改变的事件
+    handleCurrentChange(pageNum) {
+      this.queryInfo.pagenum = pageNum
     }
   }
 }

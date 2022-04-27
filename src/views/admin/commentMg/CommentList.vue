@@ -72,17 +72,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$http.delete(`/comments/del/${id}`).then((res) => {
-          // if (res.code === 1)
-          //   location.reload()
+        this.$http.delete(`/comments/${id}`).then((res) => {
           Message.success("取消收藏")
           location.reload()
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
       });
     },
 

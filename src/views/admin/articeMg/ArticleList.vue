@@ -86,12 +86,7 @@ export default {
           Message.success("取消收藏")
           location.reload()
         })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
+      })
     },
 
     // 监听pagesize改变的事件
