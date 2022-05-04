@@ -90,7 +90,7 @@ export default {
     },
 
     async register() {
-      const {data: res} = await this.$http.post(`/user/add`, this.form)
+      const {data: res} = await this.$http.post(`/user/register`, this.form)
       if (res.code === 1) {
         Message.success('注册成功')
         this.innerVisible = false

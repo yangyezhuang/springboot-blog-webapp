@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 Vue.use(VueRouter)
 
 import Index from '../views/front/Index'
@@ -35,6 +36,7 @@ import CategoryStatistic from "../views/admin/statistic/CategoryStatistic";
 import PvStatistic from "../views/admin/statistic/PvStatistic";
 import InfoCenter from "../views/admin/other/InfoCenter";
 import UserData from "../views/front/user/UserData";
+import UpdateInfoDialog from "../views/admin/userMg/UpdateInfoDialog";
 
 const routes = [
     {
@@ -111,7 +113,8 @@ const routes = [
                 component: BreadCrumb,
                 meta: {title: '用户管理'},
                 children: [
-                    {path: 'users', component: UserList, meta: {title: '用户列表'}}
+                    {path: 'users', component: UserList, meta: {title: '用户列表'}},
+                    {path: 'userInfo/:uid', component: UpdateInfoDialog, meta: {title: '信息修改'}}
                 ]
             },
             {

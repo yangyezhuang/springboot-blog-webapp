@@ -1,22 +1,19 @@
 <template>
   <div>
-    <el-dialog title="创建用户" :visible.sync="openCardDialog">
+    <el-card>
       <el-form :model="form">
         <el-form-item label="uid" :label-width="formLabelWidth">
-          <el-input v-model="form.uid" autocomplete="off"></el-input>
+          <el-input disabled v-model="form.id" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="用户名" :label-width="formLabelWidth">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+          <el-input disabled v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" :label-width="formLabelWidth">
           <el-input v-model="form.password" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addUser()">确 定</el-button>
-        <el-button @click="updateVisible = false">取 消</el-button>
-      </div>
-    </el-dialog>
+      <el-button type="primary" @click="update()">修改</el-button>
+    </el-card>
   </div>
 </template>
 
@@ -25,38 +22,32 @@ import {Message} from "element-ui";
 
 export default {
   name: "UpdateInfoDialog",
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    openCardDialog: {
-      get() {
-        return this.visible
-      },
-      set(val) {
-        this.$emit('update:visible', val) // openCardDialog改变的时候通知父组件
-      }
-    }
-  },
   data() {
     return {
       formLabelWidth: '120px',
       form: {
-        uid:'',
+        id: '',
         username: '',
         password: ''
       },
     }
   },
+  created() {
+    this.getInfo()
+  },
+
   methods: {
-    async addUser() {
-      const {data: res} = await this.$http.post("/user/add", this.form)
+    async getInfo() {
+      let uid = this.$route.params.uid
+      const {data: res} = await this.$http.get(`/user/info/${uid}`)
+      this.form = res.data
+    }
+    ,
+    async update() {
+      const {data: res} = await this.$http.put("/user/update", this.form)
       if (res.data === 1) {
-        Message.success('发布成功')
-        location.reload()
+        Message.success('修改成功')
+        this.$router.push('/mg/userManager/users')
       } else {
         Message.success(res.data)
       }

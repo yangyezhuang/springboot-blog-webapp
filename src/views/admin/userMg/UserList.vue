@@ -9,7 +9,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button icon="" @click="addUser()">创建用户</el-button>
+<!--          <el-button icon="" @click="addUser()">创建用户</el-button>-->
         </el-col>
         <add-user-dialog :visible.sync="visible"></add-user-dialog>
       </el-row>
@@ -27,7 +27,7 @@
         <el-table-column label="id" prop="id" width="120px"></el-table-column>
         <el-table-column label="用户名" prop="username" width="180px"></el-table-column>
         <el-table-column label="密码" prop="password" show-overflow-tooltip width="180px"></el-table-column>
-        <el-table-column label="备注" prop="" show-overflow-tooltip></el-table-column>
+        <el-table-column label="备注" prop="" show-overflow-tooltip>无</el-table-column>
         <el-table-column label="操作" width="150px">
           <template v-slot="scope">
             <el-button type="primary" icon="el-icon-edit" @click="updateUser(scope.row.id)"></el-button>
@@ -93,7 +93,7 @@ export default {
 
     //  编辑课程信息
     updateUser(id) {
-      this.updateVisible = true
+      this.$router.push('/mg/userManager/userInfo/'+id)
     },
 
     // 根据 id 删除用户
@@ -103,10 +103,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$http.delete(`/user/del/${id}`).then((res) => {
+        this.$http.delete(`/user/${id}`).then((res) => {
           // if (res.code === 1)
           //   location.reload()
-          Message.success("取消收藏")
+          Message.success("删除成功")
           location.reload()
         })
       })

@@ -113,6 +113,7 @@ export default {
     // 发起post请求，保存数据
     async save() {
       let params = {
+        author:'admin',
         title: this.ruleForm.title,
         tag: this.ruleForm.tag,
         content: this.ruleForm.content,
